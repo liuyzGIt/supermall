@@ -4,12 +4,34 @@
       <div slot="center">购物街</div>
     </nav-bar>
     <HomeSwiper :banners="banners"></HomeSwiper>
+    <recommend-view :recommends="recommends"></recommend-view>
+    <feature-view></feature-view>
+    <ul>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+      <li>商品</li>
+    </ul>
   </div>
 </template>
 
 <script>
   import NavBar from "@/components/common/navbar/NavBar"
   import HomeSwiper from "./childComps/HomeSwiper"
+  import RecommendView from "./childComps/RecommendView";
+  import FeatureView from "./childComps/FeatureView";
 
   import { getHomeMultiData} from "@/network/home"
 
@@ -17,7 +39,9 @@
     name: "Home",
     components:{
       NavBar,
-      HomeSwiper
+      HomeSwiper,
+      RecommendView,
+      FeatureView
     },
     data(){
       return {
@@ -36,8 +60,9 @@
 
 <style scoped>
   #home{
-    height: 100vh;
-    position: relative;
+    padding-top: 44px;
+    /*height: 100vh;*/
+    /*position: relative;*/
   }
   .home-nav{
     background-color: var(--color-tint);
