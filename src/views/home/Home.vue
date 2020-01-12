@@ -6,6 +6,7 @@
     <HomeSwiper :banners="banners"></HomeSwiper>
     <recommend-view :recommends="recommends"></recommend-view>
     <feature-view></feature-view>
+    <tab-control :titles="['流行', '新款', '精选']"></tab-control>
     <ul>
       <li>商品</li>
       <li>商品</li>
@@ -32,6 +33,7 @@
   import HomeSwiper from "./childComps/HomeSwiper"
   import RecommendView from "./childComps/RecommendView";
   import FeatureView from "./childComps/FeatureView";
+  import TabControl from "@/components/contents/tabControl/TabControl";
 
   import { getHomeMultiData} from "@/network/home"
 
@@ -41,7 +43,8 @@
       NavBar,
       HomeSwiper,
       RecommendView,
-      FeatureView
+      FeatureView,
+      TabControl
     },
     data(){
       return {
