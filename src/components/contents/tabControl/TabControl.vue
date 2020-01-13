@@ -13,7 +13,7 @@
   export default {
     name: "TabControl",
     props:{
-      titles: String
+      titles: Array
     },
     data(){
       return {

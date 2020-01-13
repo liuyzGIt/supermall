@@ -7,6 +7,7 @@
     <recommend-view :recommends="recommends"></recommend-view>
     <feature-view></feature-view>
     <tab-control :titles="['流行', '新款', '精选']"></tab-control>
+    <GoodsList :goods="goods"></GoodsList>
     <ul>
       <li>商品</li>
       <li>商品</li>
@@ -31,11 +32,12 @@
 <script>
   import NavBar from "@/components/common/navbar/NavBar"
   import HomeSwiper from "./childComps/HomeSwiper"
-  import RecommendView from "./childComps/RecommendView";
-  import FeatureView from "./childComps/FeatureView";
-  import TabControl from "@/components/contents/tabControl/TabControl";
+  import RecommendView from "./childComps/RecommendView"
+  import FeatureView from "./childComps/FeatureView"
+  import TabControl from "@/components/contents/tabControl/TabControl"
+  import GoodsList from "@/components/contents/goods/GoodsList"
 
-  import { getHomeMultiData} from "@/network/home"
+  import { getHomeMultiData, getHomeGoods } from "@/network/home"
 
   export default {
     name: "Home",
@@ -44,12 +46,14 @@
       HomeSwiper,
       RecommendView,
       FeatureView,
-      TabControl
+      TabControl,
+      GoodsList
     },
     data(){
       return {
         banners: [],
-        recommends: []
+        recommends: [],
+        goods:[]
       }
     },
     created() {
@@ -57,6 +61,16 @@
         this.banners = res.data.banner.list
         this.recommends = res.data.recommend.list
       })
+
+      let data = this.getHomeGoods('pop')
+      this.goods = data
+    },
+    methods:{
+      getHomeGoods(type){
+        const page = this.goods[type].page + 1
+        let res = getHomeGoods(type, page)
+        return res.skulist
+      }
     }
   }
 </script>
