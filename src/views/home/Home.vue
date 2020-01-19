@@ -107,14 +107,12 @@
         this.$refs.tabControl1.currenIndex = index
       }
     },
-    activated(){
-      console.log(123)      
+    activated(){ 
       this.$refs.scroll.scrollTo(0, this.currentY, 0)
       this.$refs.scroll.refresh()
       
     },
     deactivated(){
-      console.log(456)
       this.currentY = this.$refs.scroll.getScrollY()
     }
   }

@@ -49,7 +49,6 @@
       },
       refresh(){
         this.scroll && this.scroll.refresh()
-        console.log('refresh time');
       },
       getScrollY(){
         return  this.scroll? this.scroll.y : 0

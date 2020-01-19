@@ -18,8 +18,8 @@
     height: 44px;
     text-align: center;
     line-height: 44px;
-
     box-shadow: 0px 1px 1px rgba(100, 100, 100, 0.1);
+    background-color: var('--b');
   }
   .left, .right {
     width: 60px;
