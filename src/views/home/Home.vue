@@ -3,16 +3,26 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
+    <tab-control 
+        :titles="['流行', '新款', '精选']" 
+        ref="tabControl1"        
+        v-show="isTabControlFixed"
+        class="tab-control" 
+        @tabClick="tabClick"/>
+
     <scroll class="content"
             ref="scroll"
             :probe-type="3"
             :pull-up-load="true"
             @scroll="scrollContent"
             @pullingUpload="loadMore">
-      <HomeSwiper :banners="banners"></HomeSwiper>
+      <HomeSwiper :banners="banners" @swiperImgLoad="swiperImgLoad"></HomeSwiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
-      <tab-control :titles="['流行', '新款', '精选']"></tab-control>
+      <tab-control 
+        :titles="['流行', '新款', '精选']" 
+        ref="tabControl2" 
+        @tabClick="tabClick"/>
       <GoodsList :goods="goods"></GoodsList>
     </scroll>
     <back-top @click.native="topClick" v-show="isShow"></back-top>
@@ -27,7 +37,7 @@
   import TabControl from "@/components/contents/tabControl/TabControl"
   import GoodsList from "@/components/contents/goods/GoodsList"
   import Scroll from "@/components/common/scroll/Scroll"
-  import BackTop from "@/components/common/backtop/BackTop";
+  import BackTop from "@/components/common/backtop/BackTop"
 
   import { getHomeMultiData, getHomeGoods } from "@/network/home"
   import { debounce } from "@/common/utils";
@@ -49,7 +59,10 @@
         banners: [],
         recommends: [],
         goods:[],
-        isShow: false
+        isShow: false,
+        tabControlPos: 0,
+        isTabControlFixed: false,
+        currentY: 0
       }
     },
     created() {
@@ -66,7 +79,7 @@
 
       this.$bus.$on('imgLoad', ()=>{
         refresh()
-      })
+      })      
     },
     methods:{
       getHomeGoods(type){
@@ -76,14 +89,33 @@
       },
       loadMore(){
         console.log('load more')
-
       },
-      scrollContent(pos){
+      scrollContent(pos){        
         this.isShow = -pos.y > 1000
+        this.isTabControlFixed = -pos.y > this.tabControlPos
+        // this.currentY = pos.y
       },
       topClick(){
         this.$refs.scroll.scrollTo(0, 0, 100)
+      },
+      swiperImgLoad(){
+        this.tabControlPos = this.$refs.tabControl2.$el.offsetTop
+      },
+      tabClick(index){
+        console.log(index)
+        this.$refs.tabControl2.currenIndex = index
+        this.$refs.tabControl1.currenIndex = index
       }
+    },
+    activated(){
+      console.log(123)      
+      this.$refs.scroll.scrollTo(0, this.currentY, 0)
+      this.$refs.scroll.refresh()
+      
+    },
+    deactivated(){
+      console.log(456)
+      this.currentY = this.$refs.scroll.getScrollY()
     }
   }
 </script>
@@ -97,16 +129,14 @@
     background-color: var(--color-tint);
     color: #ffffff;
 
-    position: fixed;
+    /* position: fixed;
     left: 0;
     right: 0;
     top: 0;
-    z-index: 9;
+    z-index: 9; */
   }
-  .tab-control {
-    /*吸顶效果*/
-    position: sticky;
-    top: 44px;
+  .tab-control{
+    position: relative;
     z-index: 9;
   }
   .content {
@@ -118,5 +148,6 @@
     left: 0;
     right: 0;
   }
+  
 
 </style>

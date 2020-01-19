@@ -23,6 +23,7 @@
     methods:{
       itemClick(index){
         this.currenIndex = index
+        this.$emit('tabClick', index)
       }
     }
   }
